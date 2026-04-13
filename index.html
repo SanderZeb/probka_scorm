@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wprowadzenie do materialow kompozytowych</title>
+<title>Wprowadzenie do materiałów kompozytowych</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--primary:#0a2540;--primary-light:#1a3a5c;--accent:#0070f3;--accent-light:#3291ff;--accent-glow:rgba(0,112,243,.15);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--bg:#f8fafc;--surface:#ffffff;--text:#1e293b;--text-light:#64748b;--border:#e2e8f0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);--shadow-lg:0 4px 20px rgba(0,0,0,.12);--transition:0.3s cubic-bezier(.4,0,.2,1);--font:'Segoe UI',system-ui,-apple-system,sans-serif}
@@ -48,14 +48,14 @@ html{font-size:16px;scroll-behavior:smooth}body{font-family:var(--font);backgrou
 </style>
 </head>
 <body>
-<a href="#main-content" class="skip-link" id="skipLink">Przejdz do tresci</a>
+<a href="#main-content" class="skip-link" id="skipLink">Przejdź do treści</a>
 <div class="app-wrapper" role="application" aria-label="Kurs e-learningowy">
 <header class="top-bar" role="banner">
 <div class="course-title" id="courseTitle" data-t="ct"></div>
-<nav class="lang-switcher" role="navigation" aria-label="Wybor jezyka">
+<nav class="lang-switcher" role="navigation" aria-label="Wybór języka">
 <button class="lang-btn active" data-lang="pl" aria-pressed="true" title="Polski">PL</button>
 <button class="lang-btn" data-lang="en" aria-pressed="false" title="English">EN</button>
-<button class="lang-btn" data-lang="ua" aria-pressed="false" title="Ukrainska">UA</button>
+<button class="lang-btn" data-lang="ua" aria-pressed="false" title="Ukraińska">UA</button>
 </nav>
 </header>
 <div class="progress-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -289,7 +289,7 @@ html{font-size:16px;scroll-behavior:smooth}body{font-family:var(--font);backgrou
 <div class="open-question">
 <p class="q-text" data-t="t16q"></p>
 <p style="color:var(--text-light);font-size:.85rem;margin:8px 0" data-t="t16h"></p>
-<textarea id="openAnswer" aria-label="Odpowiedz" data-t-placeholder="t16ph"></textarea>
+<textarea id="openAnswer" aria-label="Odpowiedź" data-t-placeholder="t16ph"></textarea>
 <button class="check-btn" id="checkOpen" data-t="bco"></button>
 <div class="feedback-box" id="openFeedback"></div>
 </div>
@@ -322,114 +322,114 @@ var SCORM=(function(){var api=null,ok=false;function find(w){var a=0;while(w&&!w
 
 /* ====== FULL i18n DICTIONARIES ====== */
 var T={pl:{
-ct:"Wprowadzenie do materialow kompozytowych",sl:"Przejdz do tresci",
-bi:"WPROWADZENIE",be:"CWICZENIE",bm:"MULTIMEDIA",bt:"TEST WIEDZY",bs:"PODSUMOWANIE",
-bp:"Wstecz",bn:"Dalej",bc:"Sprawdz odpowiedzi",bcq:"Sprawdz wynik testu",bco:"Sprawdz odpowiedz",bpl:"\u25B6 Odtwarz",brs:"\u21BB Resetuj",
+ct:"Wprowadzenie do materiałów kompozytowych",sl:"Przejdź do treści",
+bi:"WPROWADZENIE",be:"ĆWICZENIE",bm:"MULTIMEDIA",bt:"TEST WIEDZY",bs:"PODSUMOWANIE",
+bp:"Wstecz",bn:"Dalej",bc:"Sprawdź odpowiedzi",bcq:"Sprawdź wynik testu",bco:"Sprawdź odpowiedź",bpl:"\u25B6 Odtwórz",brs:"\u21BB Resetuj",
 // S1
-t1:"Wytwarzanie kompozytowych elementow konstrukcji samolotu",
-t1s:"Kurs 16-godzinny dla osob mlodych (14\u201324 lata)",
-t1w:"<strong>Witaj w kursie!</strong> Materialy kompozytowe to jedne z najnowoczes\u00ADniejszych tworzyw w przemysle. Poznasz ich budowe, zalety, wady oraz zastosowania \u2013 ze szczegolnym uwzglednieniem lotnictwa.",
-t1ot:"Cele ksztalcenia",
-t1o1:"Wyjasnisz, czym jest material kompozytowy i z jakich skladnikow sie sklada",
-t1o2:"Wymienisz najwazniejsze zalety i wady kompozytow",
-t1o3:"Wskazesz branze, w ktorych stosuje sie materialy kompozytowe",
-t1o4:"Podasz przyklady nowoczesnych konstrukcji kompozytowych w lotnictwie",
+t1:"Wytwarzanie kompozytowych elementów konstrukcji samolotu",
+t1s:"Kurs 16-godzinny dla osób młodych (14\u201324 lata)",
+t1w:"<strong>Witaj w kursie!</strong> Materiały kompozytowe to jedne z najnowocześ\u00ADniejszych tworzyw w przemyśle. Poznasz ich budowę, zalety, wady oraz zastosowania \u2013 ze szczególnym uwzględnieniem lotnictwa.",
+t1ot:"Cele kształcenia",
+t1o1:"Wyjaśnisz, czym jest materiał kompozytowy i z jakich składników się składa",
+t1o2:"Wymienisz najważniejsze zalety i wady kompozytów",
+t1o3:"Wskażesz branże, w których stosuje się materiały kompozytowe",
+t1o4:"Podasz przykłady nowoczesnych konstrukcji kompozytowych w lotnictwie",
 // S2
 t2:"Czym jest kompozyt?",
-t2p1:'Slowo <em>kompozyt</em> pochodzi od lacinskiego <em>compositus</em> \u2013 \u201Ezlozony\u201D. Kazdy material kompozytowy powstaje z polaczenia co najmniej <strong>dwoch roznych skladnikow</strong>, ktore razem tworza strukture o lepszych wlasciwosciach.',
-t2an:'<strong>Analogia:</strong> Wlokna mozna porownac do stalowego zbrojenia w betonie \u2013 to one \u201Eniosa\u201D sily rozciagajace. Zywica dziala jak beton, utrzymujac wszystko razem.',
-t2p2:"Kompozyt sklada sie z dwoch podstawowych elementow:",
-t2l1:"<strong>Zbrojenia (wlokna)</strong> \u2013 nadaja wytrzymalosc i sztywnosc",
-t2l2:"<strong>Osnowy (zywica)</strong> \u2013 otacza wlokna, utrzymuje je i przenosi obciazenia",
+t2p1:'Słowo <em>kompozyt</em> pochodzi od łacińskiego <em>compositus</em> \u2013 \u201Ezłożony\u201D. Każdy materiał kompozytowy powstaje z połączenia co najmniej <strong>dwóch różnych składników</strong>, które razem tworzą strukturę o lepszych właściwościach.',
+t2an:'<strong>Analogia:</strong> Włókna można porównać do stalowego zbrojenia w betonie \u2013 to one \u201Eniosą\u201D siły rozciągające. Żywica działa jak beton, utrzymując wszystko razem.',
+t2p2:"Kompozyt składa się z dwóch podstawowych elementów:",
+t2l1:"<strong>Zbrojenia (włókna)</strong> \u2013 nadają wytrzymałość i sztywność",
+t2l2:"<strong>Osnowy (żywica)</strong> \u2013 otacza włókna, utrzymuje je i przenosi obciążenia",
 // S3
-t3:"Budowa kompozytu \u2013 interaktywny schemat",t3p:"Kliknij na elementy schematu, aby dowiedziec sie wiecej:",
-t3fb:"ZBROJENIE (wlokna)",t3rs:"OSNOWA (zywica)",t3cp:"KOMPOZYT",
-t3fh:"Zbrojenie \u2013 wlokna",t3fd:"Element nosny kompozytu: <strong>weglowe</strong> (najwyzsza sztywnosc), <strong>szklane</strong> (tansze), <strong>aramidowe/Kevlar</strong> (odpornosc na uderzenia).",
-t3rh:"Osnowa \u2013 zywica",t3rd:"Otacza wlokna i przenosi obciazenia. W lotnictwie: <strong>zywice epoksydowe</strong> \u2013 trwale i odporne na temperature.",
-t3ch:"Gotowy kompozyt (laminat)",t3cd:"Laczy <strong>lekkosc zywicy</strong> z <strong>wytrzymaloscia wlokien</strong> \u2013 dlatego jest ceniony w lotnictwie.",
+t3:"Budowa kompozytu \u2013 interaktywny schemat",t3p:"Kliknij na elementy schematu, aby dowiedzieć się więcej:",
+t3fb:"ZBROJENIE (włókna)",t3rs:"OSNOWA (żywica)",t3cp:"KOMPOZYT",
+t3fh:"Zbrojenie \u2013 włókna",t3fd:"Element nośny kompozytu: <strong>węglowe</strong> (najwyższa sztywność), <strong>szklane</strong> (tańsze), <strong>aramidowe/Kevlar</strong> (odporność na uderzenia).",
+t3rh:"Osnowa \u2013 żywica",t3rd:"Otacza włókna i przenosi obciążenia. W lotnictwie: <strong>żywice epoksydowe</strong> \u2013 trwałe i odporne na temperaturę.",
+t3ch:"Gotowy kompozyt (laminat)",t3cd:"Łączy <strong>lekkość żywicy</strong> z <strong>wytrzymałością włókien</strong> \u2013 dlatego jest ceniony w lotnictwie.",
 // S4
-t4:"Rodzaje wlokien stosowanych w lotnictwie",t4p:"Wybierz rodzaj wlokna, aby poznac jego wlasciwosci:",
-t4tc:"Wlokna weglowe",t4tg:"Wlokna szklane",t4ta:"Wlokna aramidowe",
-t4ch:"Wlokna weglowe (Carbon Fiber)",t4cd:"Zapewniaja <strong>najwyzsza sztywnosc</strong> i doskonala odpornosc na zmeczenie. Sa lekkie. Podstawowy material w Boeing 787 i Airbus A350.",t4cf:"<strong>Ciekawostka:</strong> Wlokno weglowe jest 5 razy lzejsze od stali, a 2 razy sztywniejsze!",
-t4gh:"Wlokna szklane (Glass Fiber)",t4gd:"Sa <strong>tansze</strong> od weglowych i dobrze izoluja elektrycznie. Stosowane w elementach wnetrz samolotow.",
-t4ah:"Wlokna aramidowe (Kevlar)",t4ad:"Charakteryzuja sie <strong>bardzo wysoka odpornoscia na uderzenia</strong>. Stosowane w elementach narazonych na bird strike.",
+t4:"Rodzaje włókien stosowanych w lotnictwie",t4p:"Wybierz rodzaj włókna, aby poznać jego właściwości:",
+t4tc:"Włókna węglowe",t4tg:"Włókna szklane",t4ta:"Włókna aramidowe",
+t4ch:"Włókna węglowe (Carbon Fiber)",t4cd:"Zapewniają <strong>najwyższą sztywność</strong> i doskonałą odporność na zmęczenie. Są lekkie. Podstawowy materiał w Boeing 787 i Airbus A350.",t4cf:"<strong>Ciekawostka:</strong> Włókno węglowe jest 5 razy lżejsze od stali, a 2 razy sztywniejsze!",
+t4gh:"Włókna szklane (Glass Fiber)",t4gd:"Są <strong>tańsze</strong> od węglowych i dobrze izolują elektrycznie. Stosowane w elementach wnętrz samolotów.",
+t4ah:"Włókna aramidowe (Kevlar)",t4ad:"Charakteryzują się <strong>bardzo wysoką odpornością na uderzenia</strong>. Stosowane w elementach narażonych na bird strike.",
 // S5
-t5:"Zywice \u2013 spoiwo kompozytu",t5p:"Zywica (osnowa) to drugi kluczowy skladnik. Pelni kilka istotnych funkcji:",
-t5c1t:"Spaja wlokna",t5c1d:"Utrzymuje wlokna w odpowiednim polozeniu i orientacji.",
-t5c2t:"Przenosi obciazenia",t5c2d:"Rowno rozklada naprezenia pomiedzy wlokna.",
-t5c3t:"Chroni wlokna",t5c3d:"Zabezpiecza przed wilgocia, chemikaliami i uszkodzeniami.",
-t5w:"<strong>Wazne:</strong> W lotnictwie najczesciej stosuje sie <strong>zywice epoksydowe</strong> (termoutwardzalne). Wada: trudnosc recyklingu.",
+t5:"Żywice \u2013 spoiwo kompozytu",t5p:"Żywica (osnowa) to drugi kluczowy składnik. Pełni kilka istotnych funkcji:",
+t5c1t:"Spaja włókna",t5c1d:"Utrzymuje włókna w odpowiednim położeniu i orientacji.",
+t5c2t:"Przenosi obciążenia",t5c2d:"Równo rozkłada naprężenia pomiędzy włókna.",
+t5c3t:"Chroni włókna",t5c3d:"Zabezpiecza przed wilgocią, chemikaliami i uszkodzeniami.",
+t5w:"<strong>Ważne:</strong> W lotnictwie najczęściej stosuje się <strong>żywice epoksydowe</strong> (termoutwardzalne). Wada: trudność recyklingu.",
 // S6
-t6:"Zalety materialow kompozytowych",t6p:"Kliknij na karty, aby odkryc szczegoly:",
-t6f1:"Wytrzymalosc vs masa",t6f2:"Odpornosc na korozje",t6f3:"Odpornosc zmeczeniowa",t6fh:"Kliknij, aby odkryc",
-t6f1b:"Czesc z aluminium moze wazyc <strong>2 razy wiecej</strong> niz identyczna z kompozytu weglowego.",
-t6f2b:"Kompozyty <strong>nie utleniaja sie ani nie rdzewieja</strong>. Idealne do srodowisk wilgotnych.",
-t6f3b:"Potrafia znosic <strong>dlugotrwale obciazenia cykliczne</strong> bez utraty wlasciwosci mechanicznych.",
-t6c4t:"Niska rozszerzalnosc cieplna",t6c4d:"Wymiary zmieniaja sie mniej pod wplywem temperatury niz u metali \u2013 kluczowe w lotnictwie.",
-t6c5t:"Izolacja elektryczna i cieplna",t6c5d:"Kompozyty sa dobrymi izolatorami, co wazne w zastosowaniach technicznych.",
+t6:"Zalety materiałów kompozytowych",t6p:"Kliknij na karty, aby odkryć szczegóły:",
+t6f1:"Wytrzymałość vs masa",t6f2:"Odporność na korozję",t6f3:"Odporność zmęczeniowa",t6fh:"Kliknij, aby odkryć",
+t6f1b:"Część z aluminium może ważyć <strong>2 razy więcej</strong> niż identyczna z kompozytu węglowego.",
+t6f2b:"Kompozyty <strong>nie utleniają się ani nie rdzewieją</strong>. Idealne do środowisk wilgotnych.",
+t6f3b:"Potrafią znosić <strong>długotrwałe obciążenia cykliczne</strong> bez utraty właściwości mechanicznych.",
+t6c4t:"Niska rozszerzalność cieplna",t6c4d:"Wymiary zmieniają się mniej pod wpływem temperatury niż u metali \u2013 kluczowe w lotnictwie.",
+t6c5t:"Izolacja elektryczna i cieplna",t6c5d:"Kompozyty są dobrymi izolatorami, co ważne w zastosowaniach technicznych.",
 // S7
-t7:"Wady materialow kompozytowych",t7p:"Mimo wielu zalet, kompozyty maja tez istotne ograniczenia:",
-t7c1t:"Wysoki koszt produkcji",t7c1d:"Proces wymaga precyzji i czystosci. Pecherzyki powietrza moga oslabic laminat.",
-t7c2t:"Trudnosc w recyklingu",t7c2d:"Zywice termoutwardzalne po utwardzeniu nie topia sie ponownie.",
-t7c3t:"Podatnosc na delaminacje",t7c3d:"Moga ulegac rozwarstwieniu, zwlaszcza przy uderzeniach.",
-t7c4t:"Trudna diagnostyka",t7c4d:"Uszkodzenia wewnetrzne czesto niewidoczne golym okiem. Wymagaja badan ultradzwiekowych.",
+t7:"Wady materiałów kompozytowych",t7p:"Mimo wielu zalet, kompozyty mają też istotne ograniczenia:",
+t7c1t:"Wysoki koszt produkcji",t7c1d:"Proces wymaga precyzji i czystości. Pęcherzyki powietrza mogą osłabić laminat.",
+t7c2t:"Trudność w recyklingu",t7c2d:"Żywice termoutwardzalne po utwardzeniu nie topią się ponownie.",
+t7c3t:"Podatność na delaminację",t7c3d:"Mogą ulegać rozwarstwieniu, zwłaszcza przy uderzeniach.",
+t7c4t:"Trudna diagnostyka",t7c4d:"Uszkodzenia wewnętrzne często niewidoczne gołym okiem. Wymagają badań ultradźwiękowych.",
 // S8
-t8:"Przyporzdkuj: zalety i wady kompozytow",t8p:"Przeciagnij lub kliknij kazde stwierdzenie do odpowiedniej kategorii:",
-t8i1:"Wysoki stosunek wytrzymalosci do masy",t8i2:"Trudnosc w recyklingu",t8i3:"Odpornosc na korozje",t8i4:"Wysoki koszt produkcji",t8i5:"Niska rozszerzalnosc cieplna",t8i6:"Podatnosc na delaminacje",
+t8:"Przyporządkuj: zalety i wady kompozytów",t8p:"Przeciągnij lub kliknij każde stwierdzenie do odpowiedniej kategorii:",
+t8i1:"Wysoki stosunek wytrzymałości do masy",t8i2:"Trudność w recyklingu",t8i3:"Odporność na korozję",t8i4:"Wysoki koszt produkcji",t8i5:"Niska rozszerzalność cieplna",t8i6:"Podatność na delaminację",
 t8za:"ZALETY",t8wa:"WADY",
 // S9
-t9:"Zastosowania kompozytow w lotnictwie",t9p:"W lotnictwie kompozyty wykorzystuje sie do budowy kluczowych elementow:",
-t9l1:"<strong>Kadluby</strong> \u2013 glowna struktura samolotu",t9l2:"<strong>Skrzydla</strong> \u2013 elementy nosne",t9l3:"<strong>Stateczniki</strong> \u2013 stabilizacja lotu",t9l4:"<strong>Owiewki silnikow</strong> \u2013 oslony aerodynamiczne",t9l5:"<strong>Elementy wnetrz</strong> \u2013 panele, schowki, podlogi",
+t9:"Zastosowania kompozytów w lotnictwie",t9p:"W lotnictwie kompozyty wykorzystuje się do budowy kluczowych elementów:",
+t9l1:"<strong>Kadłuby</strong> \u2013 główna struktura samolotu",t9l2:"<strong>Skrzydła</strong> \u2013 elementy nośne",t9l3:"<strong>Stateczniki</strong> \u2013 stabilizacja lotu",t9l4:"<strong>Owiewki silników</strong> \u2013 osłony aerodynamiczne",t9l5:"<strong>Elementy wnętrz</strong> \u2013 panele, schowki, podłogi",
 t9im:"Schemat samolotu z zaznaczonymi elementami kompozytowymi",
-t9f:"<strong>Czy wiesz, ze...</strong> Boeing 787 Dreamliner sklada sie w ponad <strong>50%</strong> z kompozytow, a starszy Boeing 777 zawieral tylko 12%.",
+t9f:"<strong>Czy wiesz, że...</strong> Boeing 787 Dreamliner składa się w ponad <strong>50%</strong> z kompozytów, a starszy Boeing 777 zawierał tylko 12%.",
 // S10
-t10:"Gdzie jeszcze stosuje sie kompozyty?",t10p:"Kliknij na branze, aby poznac szczegoly:",
-t10a1:"Motoryzacja",t10a2:"Sport",t10a3:"Medycyna",t10a4:"Architektura",t10a5:"Zeglarstwo",t10a6:"Kosmonautyka",
-t10d1:"W samochodach wyscigowych (F1): <strong>karoserie, panele podlogowe, spojlery</strong> i elementy zawieszenia.",
-t10d2:"Narty, rakiety tenisowe, kaski, rowery \u2013 <strong>lekkosc i wytrzymalosc</strong> kompozytow.",
-t10d3:"<strong>Protezy konczyn, ortezy, sprzet rehabilitacyjny</strong> \u2013 lekkosc i formowalnosc.",
-t10d4:"<strong>Lekkie, trwale fasady i dachy</strong> o nietypowych ksztaltach.",
+t10:"Gdzie jeszcze stosuje się kompozyty?",t10p:"Kliknij na branże, aby poznać szczegóły:",
+t10a1:"Motoryzacja",t10a2:"Sport",t10a3:"Medycyna",t10a4:"Architektura",t10a5:"Żeglarstwo",t10a6:"Kosmonautyka",
+t10d1:"W samochodach wyścigowych (F1): <strong>karoserie, panele podłogowe, spojlery</strong> i elementy zawieszenia.",
+t10d2:"Narty, rakiety tenisowe, kaski, rowery \u2013 <strong>lekkość i wytrzymałość</strong> kompozytów.",
+t10d3:"<strong>Protezy kończyn, ortezy, sprzęt rehabilitacyjny</strong> \u2013 lekkość i formowalność.",
+t10d4:"<strong>Lekkie, trwałe fasady i dachy</strong> o nietypowych kształtach.",
 t10d5:"Nowoczesne jachty z <strong>ultralekkich struktur kompozytowych</strong>.",
-t10d6:"Rakiety, kapsuly zalogowe, satelity z <strong>kompozytow weglowo-epoksydowych</strong>.",
+t10d6:"Rakiety, kapsuły załogowe, satelity z <strong>kompozytów węglowo-epoksydowych</strong>.",
 // S11
 t11:"Boeing 787 Dreamliner \u2013 rewolucja kompozytowa",
-t11p:"Boeing 787 i Airbus A350 XWB \u2013 ponad <strong>50%</strong> masy stanowia kompozyty. Kadluby, skrzydla i usterzenia wykonane z laminatow weglowych.",
-t11h:"Sklad materialowy Boeing 787 (wg masy)",t11m:"Material",t11u:"Udzial",
+t11p:"Boeing 787 i Airbus A350 XWB \u2013 ponad <strong>50%</strong> masy stanowią kompozyty. Kadłuby, skrzydła i usterzenia wykonane z laminatów węglowych.",
+t11h:"Skład materiałowy Boeing 787 (wg masy)",t11m:"Materiał",t11u:"Udział",
 t11r1:"Kompozyty",t11r2:"Aluminium",t11r3:"Tytan",t11r4:"Stal",t11r5:"Inne",
-t11f:"<strong>Efekt:</strong> Boeing 787 zuzywa okolo <strong>20% mniej paliwa</strong> w porownaniu z wczesniejszymi samolotami.",
+t11f:"<strong>Efekt:</strong> Boeing 787 zużywa około <strong>20% mniej paliwa</strong> w porównaniu z wcześniejszymi samolotami.",
 // S12
 t12:"Kompozyty w lotnictwie wojskowym i kosmonautyce",
-t12h1:"Lotnictwo wojskowe",t12p1:"Kompozyty stosuje sie w <strong>samolotach stealth</strong> (F-35 Lightning II, B-2 Spirit) \u2013 pochlaniaja fale radarowe.",
-t12p2:"W smiglowcach (Sikorsky S70i BlackHawk) \u2013 kompozytowe <strong>lopaty wirnika</strong>, poprawia to trwalosc i zmniejsza halas.",
-t12h2:"Kosmonautyka",t12p3:"Rakiety, kapsuly zalogowe, satelity z <strong>kompozytow weglowo-epoksydowych</strong>. Kazdy kilogram mniej = nizsze koszty wyniesienia na orbite.",
+t12h1:"Lotnictwo wojskowe",t12p1:"Kompozyty stosuje się w <strong>samolotach stealth</strong> (F-35 Lightning II, B-2 Spirit) \u2013 pochłaniają fale radarowe.",
+t12p2:"W śmigłowcach (Sikorsky S70i BlackHawk) \u2013 kompozytowe <strong>łopaty wirnika</strong>, poprawia to trwałość i zmniejsza hałas.",
+t12h2:"Kosmonautyka",t12p3:"Rakiety, kapsuły załogowe, satelity z <strong>kompozytów węglowo-epoksydowych</strong>. Każdy kilogram mniej = niższe koszty wyniesienia na orbitę.",
 // S13
 t13:"Kompozyty w sporcie i Formule 1",
-t13h1:"Formula 1",t13p1:"Niemal kazdy element bolidu F1 \u2013 od <strong>monokoku</strong> po <strong>spojlery</strong> \u2013 wykonany z wlokna weglowego. Chroni kierowce przy >200 km/h.",
-t13h2:"Zeglarstwo i inne sporty",t13p2:"Jachty regatowe, rowery wyscigowe, narty, kaski, rakiety tenisowe \u2013 wszedzie wlokna weglowe.",
-t13s:"<strong>Wspolna cecha:</strong> wysoka wytrzymalosc przy niskiej masie \u2013 to najwieksza zaleta kompozytow.",
+t13h1:"Formuła 1",t13p1:"Niemal każdy element bolidu F1 \u2013 od <strong>monokoku</strong> po <strong>spojlery</strong> \u2013 wykonany z włókna węglowego. Chroni kierowcę przy >200 km/h.",
+t13h2:"Żeglarstwo i inne sporty",t13p2:"Jachty regatowe, rowery wyścigowe, narty, kaski, rakiety tenisowe \u2013 wszędzie włókna węglowe.",
+t13s:"<strong>Wspólna cecha:</strong> wysoka wytrzymałość przy niskiej masie \u2013 to największa zaleta kompozytów.",
 // S14
-t14:"Animacja: Proces laminowania recznego",t14p:"Obejrzyj animacje prezentujaca etapy laminowania. Kliknij \u201EOdtwarz\u201D.",
-t14ad:"<strong>Audiodeskrypcja:</strong> Animacja przedstawia forme, na ktora nakladane sa warstwy: srodek antyadhezyjny (szary), gelcoat (niebieski), zywica (zolty), tkanina weglowa 0\u00B0 (ciemne paski), zywica, tkanina weglowa 90\u00B0.",
+t14:"Animacja: Proces laminowania ręcznego",t14p:"Obejrzyj animację prezentującą etapy laminowania. Kliknij \u201EOdtwórz\u201D.",
+t14ad:"<strong>Audiodeskrypcja:</strong> Animacja przedstawia formę, na którą nakładane są warstwy: środek antyadhezyjny (szary), gelcoat (niebieski), żywica (żółty), tkanina węglowa 0\u00B0 (ciemne paski), żywica, tkanina węglowa 90\u00B0.",
 // S15
-t15:"Sprawdz swoja wiedze",t15p:"Odpowiedz na pytania. Wybierz jedna odpowiedz.",
-q1q:"1. Z jakich dwoch skladnikow sklada sie kompozyt?",q1a:"Stal i beton",q1b:"Zbrojenie (wlokna) i osnowa (zywica)",q1c:"Aluminium i tytan",q1d:"Plastelina i wlokno szklane",
-q2q:"2. Jaki procent masy Boeing 787 stanowia kompozyty?",q2a:"Ok. 20%",q2b:"Ok. 35%",q2c:"Ponad 50%",q2d:"Ok. 75%",
-q3q:"3. Ktore wlokna maja najwyzsza odpornosc na uderzenia?",q3a:"Weglowe",q3b:"Szklane",q3c:"Aramidowe (Kevlar)",q3d:"Poliestrowe",
-q4q:"4. Co NIE jest zaleta kompozytow?",q4a:"Odpornosc na korozje",q4b:"Latwy recykling",q4c:"Wysoki stosunek wytrzymalosci do masy",q4d:"Niska rozszerzalnosc cieplna",
+t15:"Sprawdź swoją wiedzę",t15p:"Odpowiedz na pytania. Wybierz jedną odpowiedź.",
+q1q:"1. Z jakich dwóch składników składa się kompozyt?",q1a:"Stal i beton",q1b:"Zbrojenie (włókna) i osnowa (żywica)",q1c:"Aluminium i tytan",q1d:"Plastelina i włókno szklane",
+q2q:"2. Jaki procent masy Boeing 787 stanowią kompozyty?",q2a:"Ok. 20%",q2b:"Ok. 35%",q2c:"Ponad 50%",q2d:"Ok. 75%",
+q3q:"3. Które włókna mają najwyższą odporność na uderzenia?",q3a:"Węglowe",q3b:"Szklane",q3c:"Aramidowe (Kevlar)",q3d:"Poliestrowe",
+q4q:"4. Co NIE jest zaletą kompozytów?",q4a:"Odporność na korozję",q4b:"Łatwy recykling",q4c:"Wysoki stosunek wytrzymałości do masy",q4d:"Niska rozszerzalność cieplna",
 // S16
-t16:"Pytanie otwarte",t16q:"Wyjasn, dlaczego materialy kompozytowe sa coraz czesciej stosowane w lotnictwie zamiast metali. Uwzglednij co najmniej trzy zalety i podaj przyklad samolotu.",
-t16h:"Wskazowka: Pomysl o wlasciwosciach mechanicznych, kosztach eksploatacji i konkretnych przykladach z kursu.",t16ph:"Wpisz swoja odpowiedz tutaj...",
+t16:"Pytanie otwarte",t16q:"Wyjaśnij, dlaczego materiały kompozytowe są coraz częściej stosowane w lotnictwie zamiast metali. Uwzględnij co najmniej trzy zalety i podaj przykład samolotu.",
+t16h:"Wskazówka: Pomyśl o właściwościach mechanicznych, kosztach eksploatacji i konkretnych przykładach z kursu.",t16ph:"Wpisz swoją odpowiedź tutaj...",
 // S17
-t17:"Twoje wyniki",t17p:"Gratulacje! Ukonczyles modul \u201EWprowadzenie do materialow kompozytowych\u201D.",t17pt:"punktow",
-t17ql:"Test zamkniety (4 pytania)",t17ol:"Pytanie otwarte",t17dl:"Cwiczenie drag & drop",t17tl:"<strong>SUMA</strong>",
-t17c:"<strong>Swietna robota!</strong> Opanowales podstawy wiedzy o materialach kompozytowych.",
+t17:"Twoje wyniki",t17p:"Gratulacje! Ukończyłeś moduł \u201EWprowadzenie do materiałów kompozytowych\u201D.",t17pt:"punktów",
+t17ql:"Test zamknięty (4 pytania)",t17ol:"Pytanie otwarte",t17dl:"Ćwiczenie drag & drop",t17tl:"<strong>SUMA</strong>",
+t17c:"<strong>Świetna robota!</strong> Opanowałeś podstawy wiedzy o materiałach kompozytowych.",
 // feedback
-dOk:"Wszystkie odpowiedzi poprawne!",dBad:"Niektorych nie przypisano poprawnie.",dMiss:"Przeciagnij wszystkie elementy.",
+dOk:"Wszystkie odpowiedzi poprawne!",dBad:"Niektórych nie przypisano poprawnie.",dMiss:"Przeciągnij wszystkie elementy.",
 qPre:"Wynik testu: ",qSuf:" na 4 pytania poprawnie.",
-oG:"<strong>Bardzo dobra odpowiedz!</strong> Kluczowe zalety i przyklad samolotu.",
-oM:"<strong>Dobra odpowiedz</strong>, ale mozna ja rozbudowac. Wspomnij wiecej zalet lub przyklad (Boeing 787).",
-oL:"<strong>Odpowiedz wymaga uzupelnienia.</strong> Lekkosc, odpornosc na korozje, wytrzymalosc, Boeing 787.",
-anim:["Krok 1: Srodek antyadhezyjny","Krok 2: Gelcoat","Krok 3: Zywica epoksydowa","Krok 4: Tkanina weglowa (0\u00B0)","Krok 5: Zywica","Krok 6: Tkanina weglowa (90\u00B0) \u2013 gotowe!"]
+oG:"<strong>Bardzo dobra odpowiedź!</strong> Kluczowe zalety i przykład samolotu.",
+oM:"<strong>Dobra odpowiedź</strong>, ale można ją rozbudować. Wspomnij więcej zalet lub przykład (Boeing 787).",
+oL:"<strong>Odpowiedź wymaga uzupełnienia.</strong> Lekkość, odporność na korozję, wytrzymałość, Boeing 787.",
+anim:["Krok 1: Środek antyadhezyjny","Krok 2: Gelcoat","Krok 3: Żywica epoksydowa","Krok 4: Tkanina węglowa (0\u00B0)","Krok 5: Żywica","Krok 6: Tkanina węglowa (90\u00B0) \u2013 gotowe!"]
 },
 en:{
 ct:"Introduction to composite materials",sl:"Skip to content",
