@@ -33,6 +33,7 @@
   <resources>
     <resource identifier="RES_1" type="webcontent" adlcp:scormType="sco" href="index.html">
       <file href="index.html"/>
+      <file href="rys_3.jpeg"/>
     </resource>
   </resources>
 
