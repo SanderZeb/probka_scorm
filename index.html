@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pl" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wprowadzenie do materialow kompozytowych</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0a2540;--primary-light:#1a3a5c;--accent:#0070f3;--accent-light:#3291ff;
+  --accent-glow:rgba(0,112,243,.15);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+  --bg:#f8fafc;--surface:#ffffff;--text:#1e293b;--text-light:#64748b;
+  --border:#e2e8f0;--radius:12px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);
+  --shadow-lg:0 4px 20px rgba(0,0,0,.12);
+  --transition:0.3s cubic-bezier(.4,0,.2,1);
+  --font:'Segoe UI',system-ui,-apple-system,sans-serif;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+img{max-width:100%;height:auto;display:block}
+button{cursor:pointer;font-family:inherit}
+.skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 24px;border-radius:0 0 8px 8px;font-weight:600;z-index:9999;transition:top .2s}
+.skip-link:focus{top:0}
+.app-wrapper{max-width:960px;margin:0 auto;padding:16px;min-height:100vh;display:flex;flex-direction:column}
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:var(--primary);color:#fff;border-radius:var(--radius) var(--radius) 0 0;flex-wrap:wrap;gap:8px}
+.top-bar .course-title{font-size:.85rem;font-weight:600;opacity:.9;flex:1 1 200px}
+.lang-switcher{display:flex;gap:4px}
+.lang-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:4px 12px;border-radius:6px;font-size:.78rem;font-weight:600;transition:var(--transition)}
+.lang-btn:hover,.lang-btn.active{background:var(--accent);border-color:var(--accent)}
+.progress-container{background:var(--primary-light);padding:6px 20px;display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:3px;transition:width .4s ease;width:0%}
+.progress-label{color:rgba(255,255,255,.8);font-size:.75rem;white-space:nowrap;min-width:60px;text-align:right}
+.screen-area{flex:1;background:var(--surface);border:1px solid var(--border);border-top:none;padding:32px 40px;min-height:480px;position:relative;overflow-y:auto}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius)}
+.nav-btn{display:flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:.9rem;font-weight:600;transition:var(--transition)}
+.nav-btn:hover{background:var(--accent-light);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.nav-btn.secondary{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.nav-btn.secondary:hover{background:var(--accent-glow)}
+.screen-indicator{font-size:.82rem;color:var(--text-light);font-weight:500}
+.screen{display:none;animation:fadeIn .4s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.screen h1{font-size:1.8rem;line-height:1.3;margin-bottom:8px;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.screen h2{font-size:1.35rem;color:var(--primary);margin:24px 0 12px;line-height:1.3}
+.screen h3{font-size:1.1rem;color:var(--primary-light);margin:16px 0 8px}
+.screen p{margin-bottom:14px;color:var(--text)}
+.screen .subtitle{color:var(--text-light);font-size:1rem;margin-bottom:24px}
+.section-badge{display:inline-block;background:var(--accent-glow);color:var(--accent);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:4px 12px;border-radius:20px;margin-bottom:12px}
+.info-box{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left:4px solid var(--accent);padding:16px 20px;border-radius:0 var(--radius) var(--radius) 0;margin:20px 0}
+.info-box.success{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-left-color:var(--success)}
+.info-box.warning{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left-color:var(--warning)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:20px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:var(--transition)}
+.card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.card .card-icon{font-size:2rem;margin-bottom:8px}
+.card .card-title{font-weight:700;margin-bottom:6px;color:var(--primary)}
+.card .card-text{font-size:.9rem;color:var(--text-light);line-height:1.6}
+.flip-card{perspective:1000px;cursor:pointer;min-height:180px}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.flip-card-front{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff}
+.flip-card-front .flip-icon{font-size:2.5rem;margin-bottom:8px}
+.flip-card-front .flip-label{font-weight:700;font-size:1rem}
+.flip-card-front .flip-hint{font-size:.75rem;opacity:.7;margin-top:8px}
+.flip-card-back{background:var(--surface);border:2px solid var(--accent);transform:rotateY(180deg);font-size:.88rem;line-height:1.6;color:var(--text)}
+.tabs{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap}
+.tab-btn{padding:10px 20px;border:2px solid var(--border);background:var(--bg);border-radius:8px 8px 0 0;font-weight:600;font-size:.88rem;color:var(--text-light);transition:var(--transition)}
+.tab-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tab-btn.active{background:var(--surface);border-color:var(--accent);border-bottom-color:var(--surface);color:var(--accent)}
+.tab-content{display:none;border:2px solid var(--accent);border-radius:0 var(--radius) var(--radius) var(--radius);padding:24px;background:var(--surface);animation:fadeIn .3s}
+.tab-content.active{display:block}
+.dnd-container{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+.dnd-source{display:flex;flex-wrap:wrap;gap:8px;min-height:60px;padding:12px;background:var(--bg);border:2px dashed var(--border);border-radius:var(--radius)}
+.dnd-target{min-height:120px;padding:16px;border:2px dashed var(--border);border-radius:var(--radius);background:var(--bg);transition:var(--transition)}
+.dnd-target.drag-over{border-color:var(--accent);background:var(--accent-glow)}
+.dnd-target .target-label{font-weight:700;margin-bottom:12px;text-align:center;padding:6px;border-radius:6px}
+.dnd-target.target-green .target-label{background:#d1fae5;color:#065f46}
+.dnd-target.target-red .target-label{background:#fee2e2;color:#991b1b}
+.dnd-item{display:inline-block;padding:8px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.85rem;font-weight:500;cursor:grab;transition:var(--transition);box-shadow:var(--shadow);user-select:none}
+.dnd-item:active{cursor:grabbing;transform:scale(1.05)}
+.dnd-item.correct{border-color:var(--success);background:#ecfdf5}
+.dnd-item.incorrect{border-color:var(--danger);background:#fef2f2}
+.dnd-items-in-target{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.diagram-container{position:relative;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-radius:var(--radius);padding:24px;margin:20px 0;text-align:center}
+.diagram-row{display:flex;justify-content:center;align-items:center;gap:16px;margin:16px 0;flex-wrap:wrap}
+.diagram-box{padding:16px 28px;border-radius:var(--radius);font-weight:700;font-size:1rem;cursor:pointer;transition:var(--transition);position:relative;border:2px solid transparent}
+.diagram-box:hover{transform:scale(1.05)}
+.diagram-box.fiber{background:#dbeafe;color:#1e40af;border-color:#93c5fd}
+.diagram-box.resin{background:#fce7f3;color:#9d174d;border-color:#f9a8d4}
+.diagram-box.composite{background:#d1fae5;color:#065f46;border-color:#6ee7b7}
+.diagram-plus,.diagram-equals{font-size:2rem;font-weight:700;color:var(--text-light)}
+.diagram-detail{display:none;margin-top:16px;padding:16px;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);text-align:left;animation:fadeIn .3s}
+.diagram-detail.visible{display:block}
+.animation-container{position:relative;background:#1e293b;border-radius:var(--radius);padding:32px;margin:20px 0;overflow:hidden;min-height:300px}
+.anim-layer{position:absolute;left:10%;right:10%;height:16px;border-radius:4px;opacity:0;transition:all 1s ease}
+.anim-layer.show{opacity:1}
+.anim-mold{position:absolute;left:8%;right:8%;bottom:40px;height:20px;background:#475569;border-radius:0 0 12px 12px}
+.anim-controls{display:flex;justify-content:center;gap:12px;margin-top:16px}
+.anim-btn{padding:10px 28px;border-radius:8px;border:none;font-weight:600;font-size:.9rem;transition:var(--transition)}
+.anim-play{background:var(--success);color:#fff}
+.anim-play:hover{background:#059669}
+.anim-reset{background:var(--border);color:var(--text)}
+.anim-step-label{color:#e2e8f0;text-align:center;font-size:1rem;font-weight:600;margin-top:12px;min-height:28px}
+.quiz-question{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:16px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:12px;font-size:1rem}
+.quiz-option{display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border-radius:8px;border:2px solid var(--border);cursor:pointer;transition:var(--transition);font-size:.92rem}
+.quiz-option:hover{border-color:var(--accent);background:var(--accent-glow)}
+.quiz-option.selected{border-color:var(--accent);background:var(--accent-glow)}
+.quiz-option.correct{border-color:var(--success);background:#ecfdf5}
+.quiz-option.wrong{border-color:var(--danger);background:#fef2f2}
+.quiz-option input[type="radio"]{width:18px;height:18px;accent-color:var(--accent)}
+.open-question textarea{width:100%;min-height:140px;padding:14px;border:2px solid var(--border);border-radius:var(--radius);font-family:var(--font);font-size:.95rem;line-height:1.6;resize:vertical;transition:var(--transition)}
+.open-question textarea:focus{border-color:var(--accent);outline:none}
+.feedback-box{margin-top:16px;padding:16px 20px;border-radius:var(--radius);font-size:.92rem;line-height:1.6;display:none}
+.feedback-box.show{display:block;animation:fadeIn .4s}
+.feedback-box.good{background:#ecfdf5;border:1px solid var(--success);color:#065f46}
+.feedback-box.partial{background:#fffbeb;border:1px solid var(--warning);color:#92400e}
+.feedback-box.poor{background:#fef2f2;border:1px solid var(--danger);color:#991b1b}
+.result-circle{width:160px;height:160px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:24px auto;font-size:2.5rem;font-weight:800;color:#fff}
+.result-circle.excellent{background:linear-gradient(135deg,var(--success),#059669)}
+.result-circle.good{background:linear-gradient(135deg,var(--accent),var(--accent-light))}
+.result-circle.needs-work{background:linear-gradient(135deg,var(--warning),#d97706)}
+.result-label{font-size:.8rem;font-weight:600;opacity:.9}
+.result-details{max-width:500px;margin:24px auto}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.img-placeholder{background:linear-gradient(135deg,#e0f2fe,#bae6fd);border-radius:var(--radius);padding:40px 20px;text-align:center;color:var(--primary-light);font-style:italic;margin:16px 0;border:1px solid #bae6fd}
+.img-placeholder .img-icon{font-size:3rem;margin-bottom:8px}
+.app-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0}
+.app-item{text-align:center;padding:20px 12px;border-radius:var(--radius);border:2px solid var(--border);transition:var(--transition);cursor:pointer}
+.app-item:hover,.app-item.active{border-color:var(--accent);background:var(--accent-glow);transform:translateY(-3px);box-shadow:var(--shadow)}
+.app-item .app-icon{font-size:2.2rem;margin-bottom:6px}
+.app-item .app-name{font-size:.82rem;font-weight:600}
+.app-detail-box{display:none;padding:16px;margin:12px 0;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border);animation:fadeIn .3s}
+.app-detail-box.visible{display:block}
+.check-btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:.95rem;font-weight:600;transition:var(--transition);margin-top:12px}
+.check-btn:hover{background:var(--accent-light)}
+.objectives{list-style:none;margin:16px 0}
+.objectives li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:.95rem}
+.objectives li::before{content:"";display:inline-block;width:22px;height:22px;min-width:22px;background:var(--accent);border-radius:50%;margin-top:2px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");background-size:14px;background-repeat:no-repeat;background-position:center}
+.content-list{margin:12px 0 12px 20px}
+.content-list li{margin:6px 0;line-height:1.6}
+.cmp-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+.cmp-table th{background:var(--primary);color:#fff;padding:10px 14px;text-align:left}
+.cmp-table td{padding:10px 14px;border-bottom:1px solid var(--border)}
+.cmp-table tr:nth-child(even){background:var(--bg)}
+@media(max-width:768px){.screen-area{padding:20px}.two-col,.dnd-container{grid-template-columns:1fr}.three-col{grid-template-columns:1fr}.screen h1{font-size:1.4rem}.top-bar{padding:8px 12px}.nav-btn{padding:8px 16px;font-size:.82rem}}
+@media(max-width:480px){.app-wrapper{padding:8px}.screen-area{padding:16px 12px}.flip-card,.flip-card-inner{min-height:200px}}
+@media print{.top-bar,.progress-container,.nav-bar,.skip-link{display:none}.screen{display:block!important;page-break-after:always}.screen-area{border:none;padding:0}}
+@media(prefers-contrast:high){:root{--border:#000;--text:#000;--bg:#fff;--surface:#fff}.nav-btn,.check-btn,.anim-btn{border:2px solid #000}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link" id="skipLink">Przejdz do tresci</a>
+<div class="app-wrapper" role="application" aria-label="Kurs e-learningowy: Wprowadzenie do materialow kompozytowych">
+<header class="top-bar" role="banner">
+<div class="course-title" id="courseTitle">Wprowadzenie do materialow kompozytowych</div>
+<nav class="lang-switcher" role="navigation" aria-label="Wybor jezyka">
+<button class="lang-btn active" data-lang="pl" aria-pressed="true" title="Polski">PL</button>
+<button class="lang-btn" data-lang="en" aria-pressed="false" title="English">EN</button>
+<button class="lang-btn" data-lang="ua" aria-pressed="false" title="Ukrainska">UA</button>
+</nav>
+</header>
+<div class="progress-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Postep kursu">
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-label" id="progressLabel">0%</div>
+</div>
+<main class="screen-area" id="main-content">
+
+<!-- SCREEN 1 -->
+<section class="screen active" id="screen-1" role="region" aria-label="Ekran 1">
+<div class="section-badge" data-i18n="badge_intro">WPROWADZENIE</div>
+<h1 data-i18n="s1_title">Wytwarzanie kompozytowych elementow konstrukcji samolotu</h1>
+<p class="subtitle" data-i18n="s1_subtitle">Kurs 16-godzinny dla osob mlodych (14-24 lata)</p>
+<div class="info-box"><p data-i18n="s1_welcome"><strong>Witaj w kursie!</strong> Materialy kompozytowe to jedne z najnowoczes&shy;niejszych tworzyw wykorzystywanych w przemysle. W tym module poznasz ich budowe, zalety, wady oraz zastosowania &ndash; ze szczegolnym uwzglednieniem lotnictwa.</p></div>
+<h2 data-i18n="s1_obj_title">Cele ksztalcenia</h2>
+<ul class="objectives">
+<li data-i18n="s1_obj1">Wyjasnisz, czym jest material kompozytowy i z jakich skladnikow sie sklada</li>
+<li data-i18n="s1_obj2">Wymienisz najwazniejsze zalety i wady kompozytow</li>
+<li data-i18n="s1_obj3">Wskazesz branze, w ktorych stosuje sie materialy kompozytowe</li>
+<li data-i18n="s1_obj4">Podasz przyklady nowoczesnych konstrukcji kompozytowych w lotnictwie</li>
+</ul>
+</section>
+
+<!-- SCREEN 2 -->
+<section class="screen" id="screen-2" role="region" aria-label="Ekran 2">
+<div class="section-badge">1.1</div>
+<h1 data-i18n="s2_title">Czym jest kompozyt?</h1>
+<p data-i18n="s2_p1">Slowo <em>kompozyt</em> pochodzi od lacinskiego <em>compositus</em>, co oznacza &bdquo;zlozony&rdquo;. Kazdy material kompozytowy powstaje z polaczenia co najmniej <strong>dwoch roznych skladnikow</strong>, ktore razem tworza strukture o lepszych wlasciwosciach niz kazdy z nich z osobna.</p>
+<div class="info-box"><p data-i18n="s2_analogy"><strong>Analogia:</strong> Wlokna mozna porownac do stalowego zbrojenia w betonie &ndash; to one &bdquo;niosa&rdquo; sily rozciagajace. Zywica natomiast dziala jak beton, ktory utrzymuje wszystko razem i nadaje calosci ksztalt.</p></div>
+<p data-i18n="s2_p2">W najprostszym ujeciu kompozyt sklada sie z dwoch podstawowych elementow:</p>
+<ul class="content-list">
+<li data-i18n="s2_li1"><strong>Zbrojenia (wlokna)</strong> &ndash; nadaja wytrzymalosc i sztywnosc</li>
+<li data-i18n="s2_li2"><strong>Osnowy (zywica)</strong> &ndash; otacza wlokna, utrzymuje je i przenosi obciazenia</li>
+</ul>
+</section>
+
+<!-- SCREEN 3: Interactive diagram -->
+<section class="screen" id="screen-3" role="region" aria-label="Ekran 3">
+<div class="section-badge">1.1</div>
+<h1 data-i18n="s3_title">Budowa kompozytu &ndash; interaktywny schemat</h1>
+<p data-i18n="s3_p1">Kliknij na poszczegolne elementy schematu, aby dowiedziec sie wiecej:</p>
+<div class="diagram-container" role="img" aria-label="Schemat budowy kompozytu">
+<div class="diagram-row">
+<div class="diagram-box fiber" tabindex="0" role="button" aria-expanded="false" data-target="detail-fiber" data-i18n="s3_fiber">ZBROJENIE (wlokna)</div>
+<div class="diagram-plus" aria-hidden="true">+</div>
+<div class="diagram-box resin" tabindex="0" role="button" aria-expanded="false" data-target="detail-resin" data-i18n="s3_resin">OSNOWA (zywica)</div>
+<div class="diagram-equals" aria-hidden="true">=</div>
+<div class="diagram-box composite" tabindex="0" role="button" aria-expanded="false" data-target="detail-composite" data-i18n="s3_composite">KOMPOZYT</div>
+</div>
+<div class="diagram-detail" id="detail-fiber"><h3>Zbrojenie &ndash; wlokna</h3><p>Wlokna stanowia element nosny kompozytu: <strong>weglowe</strong> (najwyzsza sztywnosc), <strong>szklane</strong> (tansze, dobra izolacja), <strong>aramidowe/Kevlar</strong> (odpornosc na uderzenia).</p></div>
+<div class="diagram-detail" id="detail-resin"><h3>Osnowa &ndash; zywica</h3><p>Otacza wlokna i przenosi obciazenia. W lotnictwie: <strong>zywice epoksydowe</strong> &ndash; trwale, odporne na temperature i chemikalia.</p></div>
+<div class="diagram-detail" id="detail-composite"><h3>Gotowy kompozyt (laminat)</h3><p>Laczy <strong>lekkosc zywicy</strong> z <strong>wytrzymaloscia wlokien</strong> &ndash; dlatego jest tak ceniony w lotnictwie.</p></div>
+</div>
+</section>
+
+<!-- SCREEN 4: Tabs -->
+<section class="screen" id="screen-4" role="region" aria-label="Ekran 4">
+<div class="section-badge">1.1</div>
+<h1 data-i18n="s4_title">Rodzaje wlokien stosowanych w lotnictwie</h1>
+<p data-i18n="s4_p1">Wybierz rodzaj wlokna, aby poznac jego wlasciwosci:</p>
+<div class="tabs" role="tablist">
+<button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-carbon" id="tab-btn-carbon" data-i18n="s4_tab_carbon">Wlokna weglowe</button>
+<button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-glass" id="tab-btn-glass" data-i18n="s4_tab_glass">Wlokna szklane</button>
+<button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-aramid" id="tab-btn-aramid" data-i18n="s4_tab_aramid">Wlokna aramidowe</button>
+</div>
+<div class="tab-content active" id="tab-carbon" role="tabpanel" aria-labelledby="tab-btn-carbon">
+<h3>Wlokna weglowe (Carbon Fiber)</h3>
+<p>Zapewniaja <strong>najwyzsza sztywnosc</strong> i doskonala odpornosc na zmeczenie. Sa lekkie i maja niska rozszerzalnosc cieplna. Podstawowy material w Boeing 787 i Airbus A350.</p>
+<div class="info-box"><p><strong>Ciekawostka:</strong> Wlokno weglowe jest 5 razy lzejsze od stali, a przy tym 2 razy sztywniejsze!</p></div>
+</div>
+<div class="tab-content" id="tab-glass" role="tabpanel" aria-labelledby="tab-btn-glass">
+<h3>Wlokna szklane (Glass Fiber)</h3>
+<p>Sa <strong>tansze</strong> od weglowych i dobrze izoluja elektrycznie. Stosowane w elementach wnetrz samolotow, owiewkach i oslonach.</p>
+</div>
+<div class="tab-content" id="tab-aramid" role="tabpanel" aria-labelledby="tab-btn-aramid">
+<h3>Wlokna aramidowe (Kevlar)</h3>
+<p>Charakteryzuja sie <strong>bardzo wysoka odpornoscia na uderzenia</strong>. Stosowane w elementach narazonych na bird strike i w kamizelkach ochronnych.</p>
+</div>
+</section>
+
+<!-- SCREEN 5 -->
+<section class="screen" id="screen-5" role="region" aria-label="Ekran 5">
+<div class="section-badge">1.1</div>
+<h1 data-i18n="s5_title">Zywice &ndash; spoiwo kompozytu</h1>
+<p>Zywica (osnowa) to drugi kluczowy skladnik. Pelni kilka istotnych funkcji:</p>
+<div class="three-col">
+<div class="card"><div class="card-icon" aria-hidden="true">&#128279;</div><div class="card-title">Spaja wlokna</div><div class="card-text">Utrzymuje wlokna w odpowiednim polozeniu i orientacji.</div></div>
+<div class="card"><div class="card-icon" aria-hidden="true">&#128260;</div><div class="card-title">Przenosi obciazenia</div><div class="card-text">Rowno rozklada naprezenia pomiedzy poszczegolne wlokna.</div></div>
+<div class="card"><div class="card-icon" aria-hidden="true">&#128737;</div><div class="card-title">Chroni wlokna</div><div class="card-text">Zabezpiecza przed wilgocia, chemikaliami i uszkodzeniami.</div></div>
+</div>
+<div class="info-box warning"><p><strong>Wazne:</strong> W lotnictwie najczesciej stosuje sie <strong>zywice epoksydowe</strong> (termoutwardzalne). Po utwardzeniu sa twarde i odporne, ale trudne do recyklingu.</p></div>
+</section>
+
+<!-- SCREEN 6: Flip cards -->
+<section class="screen" id="screen-6" role="region" aria-label="Ekran 6">
+<div class="section-badge">1.2</div>
+<h1 data-i18n="s6_title">Zalety materialow kompozytowych</h1>
+<p>Kliknij na karty, aby odkryc szczegoly kazdej zalety:</p>
+<div class="three-col">
+<div class="flip-card" tabindex="0" role="button" aria-label="Odwroc karte: Wytrzymalosc vs masa">
+<div class="flip-card-inner"><div class="flip-card-front"><div class="flip-icon" aria-hidden="true">&#9878;</div><div class="flip-label">Wytrzymalosc vs masa</div><div class="flip-hint">Kliknij, aby odkryc</div></div>
+<div class="flip-card-back"><p>Czesc z aluminium moze wazyc <strong>2 razy wiecej</strong> niz identyczna z kompozytu weglowego, przy podobnej lub wiekszej wytrzymalosci.</p></div></div></div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Odwroc karte: Odpornosc na korozje">
+<div class="flip-card-inner"><div class="flip-card-front"><div class="flip-icon" aria-hidden="true">&#128167;</div><div class="flip-label">Odpornosc na korozje</div><div class="flip-hint">Kliknij, aby odkryc</div></div>
+<div class="flip-card-back"><p>Kompozyty <strong>nie utleniaja sie ani nie rdzewieja</strong>. Swietnie sprawdzaja sie w srodowiskach wilgotnych.</p></div></div></div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Odwroc karte: Odpornosc zmeczeniowa">
+<div class="flip-card-inner"><div class="flip-card-front"><div class="flip-icon" aria-hidden="true">&#128296;</div><div class="flip-label">Odpornosc zmeczeniowa</div><div class="flip-hint">Kliknij, aby odkryc</div></div>
+<div class="flip-card-back"><p>Potrafia znosic <strong>dlugotrwale obciazenia cykliczne</strong> bez utraty wlasciwosci mechanicznych.</p></div></div></div>
+</div>
+<div class="two-col" style="margin-top:16px">
+<div class="card"><div class="card-title">Niska rozszerzalnosc cieplna</div><div class="card-text">Wymiary zmieniaja sie znacznie mniej pod wplywem temperatury niz u metali &ndash; kluczowe w lotnictwie.</div></div>
+<div class="card"><div class="card-title">Izolacja elektryczna i cieplna</div><div class="card-text">Kompozyty sa dobrymi izolatorami, co wazne w wielu zastosowaniach technicznych.</div></div>
+</div>
+</section>
+
+<!-- SCREEN 7 -->
+<section class="screen" id="screen-7" role="region" aria-label="Ekran 7">
+<div class="section-badge">1.2</div>
+<h1 data-i18n="s7_title">Wady materialow kompozytowych</h1>
+<p>Mimo wielu zalet, kompozyty maja tez istotne ograniczenia:</p>
+<div class="two-col">
+<div class="card" style="border-left:4px solid var(--danger)"><div class="card-title">Wysoki koszt produkcji</div><div class="card-text">Proces wytwarzania wymaga duzej precyzji i czystosci. Pecherzyki powietrza lub bledne ulozenie wlokien moga znaczaco oslabic laminat.</div></div>
+<div class="card" style="border-left:4px solid var(--danger)"><div class="card-title">Trudnosc w recyklingu</div><div class="card-text">Zywice termoutwardzalne po utwardzeniu nie topia sie ponownie &ndash; odzysk materialu jest kosztowny.</div></div>
+</div>
+<div class="two-col">
+<div class="card" style="border-left:4px solid var(--warning)"><div class="card-title">Podatnosc na delaminacje</div><div class="card-text">Moga ulegac rozwarstwieniom, zwlaszcza przy uderzeniach. Dlatego pokrywa sie je warstwami ochronnymi.</div></div>
+<div class="card" style="border-left:4px solid var(--warning)"><div class="card-title">Trudna diagnostyka uszkodzen</div><div class="card-text">Uszkodzenia wewnetrzne czesto niewidoczne golym okiem. Wymagaja badan ultradzwiekowych.</div></div>
+</div>
+</section>
+
+<!-- SCREEN 8: Drag & Drop -->
+<section class="screen" id="screen-8" role="region" aria-label="Ekran 8">
+<div class="section-badge" data-i18n="badge_exercise">CWICZENIE</div>
+<h1 data-i18n="s8_title">Przyporzdkuj: zalety i wady kompozytow</h1>
+<p>Przeciagnij lub kliknij kazde stwierdzenie do odpowiedniej kategorii:</p>
+<div class="dnd-source" id="dndSource" role="list" aria-label="Stwierdzenia do przypisania">
+<div class="dnd-item" draggable="true" role="listitem" data-correct="advantage">Wysoki stosunek wytrzymalosci do masy</div>
+<div class="dnd-item" draggable="true" role="listitem" data-correct="disadvantage">Trudnosc w recyklingu</div>
+<div class="dnd-item" draggable="true" role="listitem" data-correct="advantage">Odpornosc na korozje</div>
+<div class="dnd-item" draggable="true" role="listitem" data-correct="disadvantage">Wysoki koszt produkcji</div>
+<div class="dnd-item" draggable="true" role="listitem" data-correct="advantage">Niska rozszerzalnosc cieplna</div>
+<div class="dnd-item" draggable="true" role="listitem" data-correct="disadvantage">Podatnosc na delaminacje</div>
+</div>
+<div class="dnd-container">
+<div class="dnd-target target-green" id="target-advantage" data-type="advantage" role="list" aria-label="Zalety"><div class="target-label">ZALETY</div><div class="dnd-items-in-target"></div></div>
+<div class="dnd-target target-red" id="target-disadvantage" data-type="disadvantage" role="list" aria-label="Wady"><div class="target-label">WADY</div><div class="dnd-items-in-target"></div></div>
+</div>
+<button class="check-btn" id="checkDnd" data-i18n="btn_check">Sprawdz odpowiedzi</button>
+<div class="feedback-box" id="dndFeedback"></div>
+</section>
+
+<!-- SCREEN 9 -->
+<section class="screen" id="screen-9" role="region" aria-label="Ekran 9">
+<div class="section-badge">1.3</div>
+<h1 data-i18n="s9_title">Zastosowania kompozytow w lotnictwie</h1>
+<p>W lotnictwie kompozyty wykorzystuje sie do budowy kluczowych elementow:</p>
+<ul class="content-list">
+<li><strong>Kadluby</strong> &ndash; glowna struktura samolotu</li>
+<li><strong>Skrzydla</strong> &ndash; elementy nosne generujace sile nosna</li>
+<li><strong>Stateczniki</strong> (usterzenie) &ndash; elementy stabilizujace lot</li>
+<li><strong>Owiewki silnikow</strong> &ndash; aerodynamiczne oslony</li>
+<li><strong>Elementy wnetrz</strong> &ndash; panele, schowki, podlogi</li>
+</ul>
+<div class="img-placeholder" aria-label="Schemat samolotu z elementami kompozytowymi"><div class="img-icon" aria-hidden="true">&#9992;</div><p>Schemat samolotu z zaznaczonymi elementami kompozytowymi: kadlub, skrzydla, usterzenie, owiewki silnikow</p></div>
+<div class="info-box success"><p><strong>Czy wiesz, ze...</strong> Boeing 787 Dreamliner sklada sie w ponad <strong>50%</strong> z materialow kompozytowych (wg masy), podczas gdy starszy Boeing 777 zawieral tylko 12% kompozytow.</p></div>
+</section>
+
+<!-- SCREEN 10: Interactive applications -->
+<section class="screen" id="screen-10" role="region" aria-label="Ekran 10">
+<div class="section-badge">1.3</div>
+<h1 data-i18n="s10_title">Gdzie jeszcze stosuje sie kompozyty?</h1>
+<p>Kliknij na branze, aby poznac szczegoly zastosowania:</p>
+<div class="app-grid" role="list">
+<div class="app-item" tabindex="0" role="button" data-detail="app-motorsport" aria-expanded="false"><div class="app-icon" aria-hidden="true">&#127950;</div><div class="app-name">Motoryzacja</div></div>
+<div class="app-item" tabindex="0" role="button" data-detail="app-sport" aria-expanded="false"><div class="app-icon" aria-hidden="true">&#127938;</div><div class="app-name">Sport</div></div>
+<div class="app-item" tabindex="0" role="button" data-detail="app-medicine" aria-expanded="false"><div class="app-icon" aria-hidden="true">&#129657;</div><div class="app-name">Medycyna</div></div>
+<div class="app-item" tabindex="0" role="button" data-detail="app-arch" aria-expanded="false"><div class="app-icon" aria-hidden="true">&#127970;</div><div class="app-name">Architektura</div></div>
+<div class="app-item" tabindex="0" role="button" data-detail="app-marine" aria-expanded="false"><div class="app-icon" aria-hidden="true">&#9973;</div><div class="app-name">Zeglarstwo</div></div>
+<div class="app-item" tabindex="0" role="button" data-detail="app-space" aria-expanded="false"><div class="app-icon" aria-hidden="true">&#128640;</div><div class="app-name">Kosmonautyka</div></div>
+</div>
+<div class="app-detail-box" id="app-motorsport"><p>W samochodach wyscigowych (m.in. F1) kompozyty to klucz do niskiej masy: <strong>karoserie, panele podlogowe, spojlery</strong> i elementy zawieszenia.</p></div>
+<div class="app-detail-box" id="app-sport"><p>Narty, rakiety tenisowe, kaski, rowery &ndash; wszystko dzieki <strong>lekkosci i wytrzymalosci</strong> kompozytow.</p></div>
+<div class="app-detail-box" id="app-medicine"><p><strong>Protezy konczyn, ortezy, sprzet rehabilitacyjny</strong> &ndash; lekkosc i mozliwosc formowania sa kluczowe.</p></div>
+<div class="app-detail-box" id="app-arch"><p>Kompozyty umozliwiaja tworzenie <strong>lekkich, trwalych fasad i dachow</strong> o nietypowych ksztaltach.</p></div>
+<div class="app-detail-box" id="app-marine"><p>Nowoczesne jachty oceaniczne z <strong>ultralekkich struktur kompozytowych</strong> &ndash; predkosc i sztywnosc.</p></div>
+<div class="app-detail-box" id="app-space"><p>Elementy rakiet, kapsul zalogowych i satelitow z <strong>kompozytow weglowo-epoksydowych</strong> &ndash; ekstremalna odpornosc.</p></div>
+</section>
+
+<!-- SCREEN 11 -->
+<section class="screen" id="screen-11" role="region" aria-label="Ekran 11">
+<div class="section-badge">1.4</div>
+<h1 data-i18n="s11_title">Boeing 787 Dreamliner &ndash; rewolucja kompozytowa</h1>
+<p>Boeing 787 i Airbus A350 XWB to przelomowe samoloty &ndash; ponad <strong>50%</strong> ich masy stanowia materialy kompozytowe. Kadluby, skrzydla i usterzenia wykonane sa z laminatow weglowych utwardzanych w autoklawach.</p>
+<h2>Sklad materialowy Boeing 787 (wg masy)</h2>
+<table class="cmp-table" aria-label="Udzial materialow w Boeing 787">
+<thead><tr><th>Material</th><th>Udzial</th></tr></thead>
+<tbody>
+<tr><td>Kompozyty</td><td><strong>50%</strong></td></tr>
+<tr><td>Aluminium</td><td>20%</td></tr>
+<tr><td>Tytan</td><td>15%</td></tr>
+<tr><td>Stal</td><td>10%</td></tr>
+<tr><td>Inne</td><td>5%</td></tr>
+</tbody>
+</table>
+<div class="info-box success"><p><strong>Efekt:</strong> Boeing 787 zuzywa okolo <strong>20% mniej paliwa</strong> w porownaniu z wczesniejszymi samolotami tej klasy. To ogromna oszczednosc ekonomiczna i ekologiczna.</p></div>
+</section>
+
+<!-- SCREEN 12 -->
+<section class="screen" id="screen-12" role="region" aria-label="Ekran 12">
+<div class="section-badge">1.4</div>
+<h1 data-i18n="s12_title">Kompozyty w lotnictwie wojskowym i kosmonautyce</h1>
+<h2>Lotnictwo wojskowe</h2>
+<p>Kompozyty stosuje sie w <strong>samolotach stealth</strong>, np. <strong>F-35 Lightning II</strong> czy <strong>B-2 Spirit</strong>, gdzie oprocz niskiej masy liczy sie zdolnosc do <strong>pochlaniania fal radarowych</strong>.</p>
+<p>W smiglowcach (np. <strong>Sikorsky S70i BlackHawk</strong>) kompozyty sluza do budowy <strong>lopat wirnika</strong> &ndash; poprawia to trwalosc i zmniejsza halas.</p>
+<h2>Kosmonautyka</h2>
+<p>Elementy rakiet, kapsul zalogowych czy satelitow coraz czesciej wykonywane sa z <strong>kompozytow weglowo-epoksydowych</strong>, odpornych na ekstremalne temperatury i wibracje. Kazdy kilogram mniej to obnizenie kosztow wyniesienia na orbite.</p>
+</section>
+
+<!-- SCREEN 13 -->
+<section class="screen" id="screen-13" role="region" aria-label="Ekran 13">
+<div class="section-badge">1.4</div>
+<h1 data-i18n="s13_title">Kompozyty w sporcie i Formule 1</h1>
+<div class="two-col">
+<div><h2>Formula 1</h2><p>W bolidach F1 niemal kazdy element &ndash; od <strong>monokoku</strong> po <strong>spojlery</strong> &ndash; wykonany jest z wlokna weglowego. Monokoki potrafia wytrzymac uderzenia przy predkosci ponad 200 km/h, chroniac zycie kierowcy.</p></div>
+<div><h2>Zeglarstwo i inne sporty</h2><p>Nowoczesne jachty regatowe powstaja z ultralekkich struktur kompozytowych. Rowniez rowery wyscigowe, narty, kaski i rakiety tenisowe korzystaja z wlokien weglowych.</p></div>
+</div>
+<div class="info-box"><p><strong>Wspolna cecha</strong> wszystkich zastosowan kompozytow &ndash; w lotnictwie, sporcie, medycynie czy architekturze &ndash; jest potrzeba uzyskania <strong>wysokiej wytrzymalosci przy niskiej masie</strong>.</p></div>
+</section>
+
+<!-- SCREEN 14: Animation -->
+<section class="screen" id="screen-14" role="region" aria-label="Ekran 14">
+<div class="section-badge" data-i18n="badge_multimedia">MULTIMEDIA</div>
+<h1 data-i18n="s14_title">Animacja: Proces laminowania recznego</h1>
+<p>Obejrzyj animacje prezentujaca kolejne etapy laminowania recznego. Kliknij &bdquo;Odtwarz&rdquo;, aby uruchomic.</p>
+<div class="animation-container" role="img" aria-label="Animacja procesu laminowania: 6 warstw nakladanych na forme">
+<div class="anim-mold"></div>
+<div class="anim-layer" id="anim-l1" style="bottom:60px;background:linear-gradient(90deg,#94a3b8,#cbd5e1);height:8px"></div>
+<div class="anim-layer" id="anim-l2" style="bottom:70px;background:linear-gradient(90deg,#3b82f6,#60a5fa);height:10px"></div>
+<div class="anim-layer" id="anim-l3" style="bottom:82px;background:linear-gradient(90deg,#f59e0b,#fbbf24);height:4px"></div>
+<div class="anim-layer" id="anim-l4" style="bottom:88px;background:repeating-linear-gradient(45deg,#1e293b,#1e293b 2px,#334155 2px,#334155 4px);height:12px"></div>
+<div class="anim-layer" id="anim-l5" style="bottom:102px;background:linear-gradient(90deg,#f59e0b,#fbbf24);height:4px"></div>
+<div class="anim-layer" id="anim-l6" style="bottom:108px;background:repeating-linear-gradient(135deg,#1e293b,#1e293b 2px,#334155 2px,#334155 4px);height:12px"></div>
+<div class="anim-step-label" id="animLabel" aria-live="polite"></div>
+</div>
+<div class="anim-controls">
+<button class="anim-btn anim-play" id="animPlay">&#9654; Odtwarz</button>
+<button class="anim-btn anim-reset" id="animReset">&#8635; Resetuj</button>
+</div>
+<div class="info-box" style="margin-top:20px"><p><strong>Audiodeskrypcja:</strong> Animacja przedstawia forme, na ktora kolejno nakladane sa warstwy: srodek antyadhezyjny (szary), gelcoat (niebieski), zywica (zolty), tkanina weglowa w kierunku 0&deg; (ciemne paski), ponownie zywica, nastepnie tkanina weglowa w kierunku 90&deg;. Kazda warstwa pojawia sie z animacja.</p></div>
+</section>
+
+<!-- SCREEN 15: Quiz -->
+<section class="screen" id="screen-15" role="region" aria-label="Ekran 15">
+<div class="section-badge" data-i18n="badge_test">TEST WIEDZY</div>
+<h1 data-i18n="s15_title">Sprawdz swoja wiedze</h1>
+<p>Odpowiedz na ponizsze pytania. Mozesz wybrac jedna odpowiedz.</p>
+<div class="quiz-question" id="q1">
+<div class="q-text">1. Z jakich dwoch podstawowych skladnikow sklada sie material kompozytowy?</div>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q1" value="a"> <span>Stal i beton</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q1" value="b"> <span>Zbrojenie (wlokna) i osnowa (zywica)</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q1" value="c"> <span>Aluminium i tytan</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q1" value="d"> <span>Plastelina i wlokno szklane</span></label>
+</div>
+<div class="quiz-question" id="q2">
+<div class="q-text">2. Jaki procent masy Boeinga 787 Dreamliner stanowia materialy kompozytowe?</div>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q2" value="a"> <span>Okolo 20%</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q2" value="b"> <span>Okolo 35%</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q2" value="c"> <span>Ponad 50%</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q2" value="d"> <span>Okolo 75%</span></label>
+</div>
+<div class="quiz-question" id="q3">
+<div class="q-text">3. Ktore wlokna charakteryzuja sie najwyzsza odpornoscia na uderzenia?</div>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q3" value="a"> <span>Weglowe</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q3" value="b"> <span>Szklane</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q3" value="c"> <span>Aramidowe (Kevlar)</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q3" value="d"> <span>Poliestrowe</span></label>
+</div>
+<div class="quiz-question" id="q4">
+<div class="q-text">4. Ktora z ponizszych NIE jest zaleta kompozytow?</div>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q4" value="a"> <span>Odpornosc na korozje</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q4" value="b"> <span>Latwy recykling</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q4" value="c"> <span>Wysoki stosunek wytrzymalosci do masy</span></label>
+<label class="quiz-option" tabindex="0"><input type="radio" name="q4" value="d"> <span>Niska rozszerzalnosc cieplna</span></label>
+</div>
+<button class="check-btn" id="checkQuiz">Sprawdz wynik testu</button>
+<div class="feedback-box" id="quizFeedback"></div>
+</section>
+
+<!-- SCREEN 16: Open question -->
+<section class="screen" id="screen-16" role="region" aria-label="Ekran 16">
+<div class="section-badge" data-i18n="badge_test">TEST WIEDZY</div>
+<h1 data-i18n="s16_title">Pytanie otwarte</h1>
+<div class="open-question">
+<p class="q-text">Wyjasn, dlaczego materialy kompozytowe sa coraz czesciej stosowane w lotnictwie zamiast tradycyjnych metali. W odpowiedzi uwzglednij co najmniej trzy zalety kompozytow oraz podaj przyklad wspolczesnego samolotu wykorzystujacego te materialy.</p>
+<p style="color:var(--text-light);font-size:.85rem;margin:8px 0">Wskazowka: Pomysl o wlasciwosciach mechanicznych, kosztach eksploatacji i konkretnych przykladach z kursu.</p>
+<textarea id="openAnswer" aria-label="Twoja odpowiedz na pytanie otwarte" placeholder="Wpisz swoja odpowiedz tutaj..."></textarea>
+<button class="check-btn" id="checkOpen">Sprawdz odpowiedz</button>
+<div class="feedback-box" id="openFeedback"></div>
+</div>
+</section>
+
+<!-- SCREEN 17: Results -->
+<section class="screen" id="screen-17" role="region" aria-label="Ekran 17">
+<div class="section-badge" data-i18n="badge_results">PODSUMOWANIE</div>
+<h1 data-i18n="s17_title">Twoje wyniki</h1>
+<p>Gratulacje! Ukonczyles modul &bdquo;Wprowadzenie do materialow kompozytowych&rdquo;.</p>
+<div class="result-circle" id="resultCircle"><span id="resultScore">0</span><span class="result-label">punktow</span></div>
+<div class="result-details" id="resultDetails">
+<div class="result-row"><span>Test zamkniety (4 pytania)</span><strong id="resultQuiz">0/4</strong></div>
+<div class="result-row"><span>Pytanie otwarte</span><strong id="resultOpen">0/5</strong></div>
+<div class="result-row"><span>Cwiczenie drag &amp; drop</span><strong id="resultDnd">0/6</strong></div>
+<div class="result-row" style="border-bottom:2px solid var(--primary)"><span><strong>SUMA</strong></span><strong id="resultTotal">0/15</strong></div>
+</div>
+<div class="info-box success" id="resultMessage"><p><strong>Swietna robota!</strong> Opanowales podstawy wiedzy o materialach kompozytowych. Mozesz teraz przejsc do kolejnych modulow kursu.</p></div>
+</section>
+
+</main>
+<nav class="nav-bar" role="navigation" aria-label="Nawigacja kursu">
+<button class="nav-btn secondary" id="prevBtn" disabled aria-label="Poprzedni ekran">&#8592; <span data-i18n="btn_prev">Wstecz</span></button>
+<span class="screen-indicator" id="screenIndicator" aria-live="polite">1 / 17</span>
+<button class="nav-btn" id="nextBtn" aria-label="Nastepny ekran"><span data-i18n="btn_next">Dalej</span> &#8594;</button>
+</nav>
+</div>
+
+<script>
+/* SCORM 2004 API Wrapper */
+var SCORM=(function(){var api=null,initialized=false;function findAPI(win){var a=0;while(win&&!win.API_1484_11&&a<10){if(win.parent&&win.parent!==win)win=win.parent;else if(win.opener)win=win.opener;else break;a++}return win&&win.API_1484_11?win.API_1484_11:null}function init(){api=findAPI(window);if(api){var r=api.Initialize("");initialized=(r==="true"||r===true)}return initialized}function sv(k,v){if(api&&initialized)api.SetValue(k,String(v))}function gv(k){if(api&&initialized)return api.GetValue(k);return""}function commit(){if(api&&initialized)api.Commit("")}function terminate(){if(api&&initialized){api.Terminate("");initialized=false}}return{init:init,set:sv,get:gv,commit:commit,terminate:terminate}})();
+
+/* i18n - translation keys for PL/EN/UA */
+var TR={
+pl:{badge_intro:"WPROWADZENIE",badge_exercise:"CWICZENIE",badge_multimedia:"MULTIMEDIA",badge_test:"TEST WIEDZY",badge_results:"PODSUMOWANIE",btn_prev:"Wstecz",btn_next:"Dalej",btn_check:"Sprawdz odpowiedzi",
+dnd_ok:"Wszystkie odpowiedzi poprawne! Swietna robota!",dnd_bad:"Niektorych nie przypisano poprawnie. Sprobuj ponownie.",dnd_miss:"Przeciagnij wszystkie elementy przed sprawdzeniem.",
+quiz_pre:"Wynik testu: ",quiz_suf:" na 4 pytania poprawnie.",
+open_good:"Bardzo dobra odpowiedz! Uwzgledniles kluczowe zalety i przyklad samolotu.",
+open_mid:"Dobra odpowiedz, ale mozna ja rozbudowac. Wspomnij wiecej zalet lub podaj przyklad (np. Boeing 787).",
+open_low:"Odpowiedz wymaga uzupelnienia. Pamietaj o: lekkosc, odpornosc na korozje, wytrzymalosc zmeczeniowa, Boeing 787.",
+anim:["Krok 1: Srodek antyadhezyjny na forme","Krok 2: Gelcoat (warstwa ochronna)","Krok 3: Pierwsza warstwa zywicy epoksydowej","Krok 4: Tkanina weglowa (0\u00B0)","Krok 5: Kolejna warstwa zywicy","Krok 6: Tkanina weglowa (90\u00B0) \u2013 gotowe!"],
+ct:"Wprowadzenie do materialow kompozytowych",sl:"Przejdz do tresci"},
+en:{badge_intro:"INTRODUCTION",badge_exercise:"EXERCISE",badge_multimedia:"MULTIMEDIA",badge_test:"KNOWLEDGE TEST",badge_results:"SUMMARY",btn_prev:"Back",btn_next:"Next",btn_check:"Check answers",
+dnd_ok:"All correct! Great job!",dnd_bad:"Some answers are incorrect. Try again.",dnd_miss:"Drag all elements before checking.",
+quiz_pre:"Result: ",quiz_suf:" out of 4 correct.",
+open_good:"Excellent answer! You included key advantages and an aircraft example.",
+open_mid:"Good answer, but could be expanded. Mention more advantages or a specific aircraft (e.g., Boeing 787).",
+open_low:"Answer needs improvement. Remember: lightness, corrosion resistance, fatigue resistance, Boeing 787.",
+anim:["Step 1: Release agent on mold","Step 2: Gelcoat (protective layer)","Step 3: First epoxy resin layer","Step 4: Carbon fabric (0\u00B0)","Step 5: Next resin layer","Step 6: Carbon fabric (90\u00B0) \u2013 done!"],
+ct:"Introduction to composite materials",sl:"Skip to content"},
+ua:{badge_intro:"\u0412\u0421\u0422\u0423\u041F",badge_exercise:"\u0412\u041F\u0420\u0410\u0412\u0410",badge_multimedia:"\u041C\u0423\u041B\u042C\u0422\u0418\u041C\u0415\u0414\u0406\u0410",badge_test:"\u0422\u0415\u0421\u0422",badge_results:"\u041F\u0406\u0414\u0421\u0423\u041C\u041A\u0418",btn_prev:"\u041D\u0430\u0437\u0430\u0434",btn_next:"\u0414\u0430\u043B\u0456",btn_check:"\u041F\u0435\u0440\u0435\u0432\u0456\u0440\u0438\u0442\u0438",
+dnd_ok:"\u0412\u0441\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E!",dnd_bad:"\u0414\u0435\u044F\u043A\u0456 \u043D\u0435\u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u0456. \u0421\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0449\u0435.",dnd_miss:"\u041F\u0435\u0440\u0435\u0442\u044F\u0433\u043D\u0456\u0442\u044C \u0432\u0441\u0456 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0438.",
+quiz_pre:"\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442: ",quiz_suf:" \u0437 4 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E.",
+open_good:"\u0412\u0456\u0434\u043C\u0456\u043D\u043D\u043E! \u041A\u043B\u044E\u0447\u043E\u0432\u0456 \u043F\u0435\u0440\u0435\u0432\u0430\u0433\u0438 \u0442\u0430 \u043F\u0440\u0438\u043A\u043B\u0430\u0434.",
+open_mid:"\u0414\u043E\u0431\u0440\u0435, \u0430\u043B\u0435 \u043C\u043E\u0436\u043D\u0430 \u0434\u043E\u043F\u043E\u0432\u043D\u0438\u0442\u0438.",
+open_low:"\u041F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u0434\u043E\u043F\u0440\u0430\u0446\u044E\u0432\u0430\u0442\u0438. \u0417\u0433\u0430\u0434\u0430\u0439\u0442\u0435: \u043B\u0435\u0433\u043A\u0456\u0441\u0442\u044C, \u043A\u043E\u0440\u043E\u0437\u0456\u0439\u043D\u0430 \u0441\u0442\u0456\u0439\u043A\u0456\u0441\u0442\u044C, Boeing 787.",
+anim:["\u041A\u0440\u043E\u043A 1: \u0420\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A","\u041A\u0440\u043E\u043A 2: Gelcoat","\u041A\u0440\u043E\u043A 3: \u0421\u043C\u043E\u043B\u0430","\u041A\u0440\u043E\u043A 4: \u0422\u043A\u0430\u043D\u0438\u043D\u0430 0\u00B0","\u041A\u0440\u043E\u043A 5: \u0421\u043C\u043E\u043B\u0430","\u041A\u0440\u043E\u043A 6: \u0422\u043A\u0430\u043D\u0438\u043D\u0430 90\u00B0"],
+ct:"\u0412\u0441\u0442\u0443\u043F \u0434\u043E \u043A\u043E\u043C\u043F\u043E\u0437\u0438\u0442\u0456\u0432",sl:"\u041F\u0435\u0440\u0435\u0439\u0442\u0438 \u0434\u043E \u0437\u043C\u0456\u0441\u0442\u0443"}
+};
+
+/* Main App */
+(function(){
+var cur=1,total=17,lang="pl",scores={quiz:0,open:0,dnd:0};
+SCORM.init();
+var bm=SCORM.get("cmi.location");if(bm&&!isNaN(parseInt(bm)))cur=parseInt(bm);
+
+var prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn");
+var pFill=document.getElementById("progressFill"),pLabel=document.getElementById("progressLabel");
+var sInd=document.getElementById("screenIndicator");
+
+function show(n){
+  document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active")});
+  var t=document.getElementById("screen-"+n);if(t){t.classList.add("active");t.focus()}
+  prevBtn.disabled=(n<=1);nextBtn.disabled=(n>=total);
+  var pct=Math.round((n/total)*100);
+  pFill.style.width=pct+"%";pLabel.textContent=pct+"%";
+  sInd.textContent=n+" / "+total;
+  document.querySelector(".progress-container").setAttribute("aria-valuenow",pct);
+  SCORM.set("cmi.location",String(n));
+  if(n===total){calcResults();SCORM.set("cmi.completion_status","completed");SCORM.set("cmi.success_status","passed")}
+  SCORM.commit();window.scrollTo(0,0);
+}
+
+prevBtn.addEventListener("click",function(){if(cur>1){cur--;show(cur)}});
+nextBtn.addEventListener("click",function(){if(cur<total){cur++;show(cur)}});
+document.addEventListener("keydown",function(e){
+  if(e.target.tagName==="TEXTAREA"||e.target.tagName==="INPUT")return;
+  if(e.key==="ArrowRight"&&cur<total){cur++;show(cur)}
+  if(e.key==="ArrowLeft"&&cur>1){cur--;show(cur)}
+});
+
+/* Language switcher */
+document.querySelectorAll(".lang-btn").forEach(function(b){
+  b.addEventListener("click",function(){
+    document.querySelectorAll(".lang-btn").forEach(function(x){x.classList.remove("active");x.setAttribute("aria-pressed","false")});
+    b.classList.add("active");b.setAttribute("aria-pressed","true");
+    lang=b.dataset.lang;document.documentElement.lang=lang==="ua"?"uk":lang;
+    applyLang();
+  });
+});
+
+function applyLang(){
+  var t=TR[lang]||TR.pl;
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    var k=el.dataset.i18n;if(t[k])el.textContent=t[k];
+  });
+  document.getElementById("courseTitle").textContent=t.ct;
+  document.getElementById("skipLink").textContent=t.sl;
+}
+
+/* Interactive diagram (screen 3) */
+document.querySelectorAll(".diagram-box").forEach(function(box){
+  function tog(){
+    var tid=box.dataset.target,det=document.getElementById(tid),vis=det.classList.contains("visible");
+    document.querySelectorAll(".diagram-detail").forEach(function(d){d.classList.remove("visible")});
+    document.querySelectorAll(".diagram-box").forEach(function(b){b.setAttribute("aria-expanded","false")});
+    if(!vis){det.classList.add("visible");box.setAttribute("aria-expanded","true")}
+  }
+  box.addEventListener("click",tog);
+  box.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tog()}});
+});
+
+/* Tabs (screen 4) */
+document.querySelectorAll(".tab-btn").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var pid=btn.getAttribute("aria-controls");
+    document.querySelectorAll(".tab-btn").forEach(function(b){b.classList.remove("active");b.setAttribute("aria-selected","false")});
+    document.querySelectorAll(".tab-content").forEach(function(p){p.classList.remove("active")});
+    btn.classList.add("active");btn.setAttribute("aria-selected","true");
+    document.getElementById(pid).classList.add("active");
+  });
+});
+
+/* Flip cards (screen 6) */
+document.querySelectorAll(".flip-card").forEach(function(c){
+  function f(){c.classList.toggle("flipped")}
+  c.addEventListener("click",f);
+  c.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();f()}});
+});
+
+/* Applications (screen 10) */
+document.querySelectorAll(".app-item").forEach(function(item){
+  function tog(){
+    var did=item.dataset.detail,det=document.getElementById(did),vis=det.classList.contains("visible");
+    document.querySelectorAll(".app-detail-box").forEach(function(d){d.classList.remove("visible")});
+    document.querySelectorAll(".app-item").forEach(function(i){i.classList.remove("active");i.setAttribute("aria-expanded","false")});
+    if(!vis){det.classList.add("visible");item.classList.add("active");item.setAttribute("aria-expanded","true")}
+  }
+  item.addEventListener("click",tog);
+  item.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tog()}});
+});
+
+/* Drag & Drop (screen 8) */
+var selDnd=null;
+document.querySelectorAll(".dnd-item").forEach(function(item){
+  item.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain","x");e.dataTransfer.effectAllowed="move";selDnd=item;item.style.opacity="0.5"});
+  item.addEventListener("dragend",function(){item.style.opacity="1"});
+  item.addEventListener("click",function(){
+    if(selDnd&&selDnd===item){selDnd=null;item.style.outline="";return}
+    document.querySelectorAll(".dnd-item").forEach(function(i){i.style.outline=""});
+    selDnd=item;item.style.outline="3px solid var(--accent)";
+  });
+});
+document.querySelectorAll(".dnd-target").forEach(function(tgt){
+  tgt.addEventListener("dragover",function(e){e.preventDefault();tgt.classList.add("drag-over")});
+  tgt.addEventListener("dragleave",function(){tgt.classList.remove("drag-over")});
+  tgt.addEventListener("drop",function(e){e.preventDefault();tgt.classList.remove("drag-over");if(selDnd){tgt.querySelector(".dnd-items-in-target").appendChild(selDnd);selDnd.style.opacity="1";selDnd=null}});
+  tgt.addEventListener("click",function(e){if(e.target.classList.contains("dnd-item"))return;if(selDnd){tgt.querySelector(".dnd-items-in-target").appendChild(selDnd);selDnd.style.outline="";selDnd=null}});
+});
+
+document.getElementById("checkDnd").addEventListener("click",function(){
+  var t=TR[lang]||TR.pl,fb=document.getElementById("dndFeedback");
+  if(document.getElementById("dndSource").querySelectorAll(".dnd-item").length>0){fb.className="feedback-box show partial";fb.textContent=t.dnd_miss;return}
+  var ok=true;
+  document.querySelectorAll(".dnd-target").forEach(function(tgt){
+    var tp=tgt.dataset.type;
+    tgt.querySelectorAll(".dnd-item").forEach(function(it){
+      if(it.dataset.correct===tp){it.classList.add("correct");it.classList.remove("incorrect")}
+      else{it.classList.add("incorrect");it.classList.remove("correct");ok=false}
+    });
+  });
+  scores.dnd=document.querySelectorAll(".dnd-item.correct").length;
+  if(ok){fb.className="feedback-box show good";fb.textContent=t.dnd_ok}
+  else{fb.className="feedback-box show partial";fb.textContent=t.dnd_bad}
+});
+
+/* Animation (screen 14) */
+var animR=false;
+var animSteps=["anim-l1","anim-l2","anim-l3","anim-l4","anim-l5","anim-l6"];
+document.getElementById("animPlay").addEventListener("click",function(){
+  if(animR)return;animR=true;var t=TR[lang]||TR.pl;var lbl=document.getElementById("animLabel");
+  animSteps.forEach(function(id){document.getElementById(id).classList.remove("show")});lbl.textContent="";
+  animSteps.forEach(function(id,i){setTimeout(function(){document.getElementById(id).classList.add("show");lbl.textContent=t.anim[i]||"";if(i===animSteps.length-1)animR=false},(i+1)*1200)});
+});
+document.getElementById("animReset").addEventListener("click",function(){animSteps.forEach(function(id){document.getElementById(id).classList.remove("show")});document.getElementById("animLabel").textContent="";animR=false});
+
+/* Quiz (screen 15) */
+var ans={q1:"b",q2:"c",q3:"c",q4:"b"};
+document.querySelectorAll(".quiz-option").forEach(function(opt){
+  opt.addEventListener("click",function(){var r=opt.querySelector("input[type=radio]");r.checked=true;opt.closest(".quiz-question").querySelectorAll(".quiz-option").forEach(function(o){o.classList.remove("selected")});opt.classList.add("selected")});
+  opt.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();opt.click()}});
+});
+
+document.getElementById("checkQuiz").addEventListener("click",function(){
+  var t=TR[lang]||TR.pl,c=0;
+  Object.keys(ans).forEach(function(qn){
+    var sel=document.querySelector('input[name="'+qn+'"]:checked'),qEl=document.getElementById(qn);
+    qEl.querySelectorAll(".quiz-option").forEach(function(o){o.classList.remove("correct","wrong")});
+    if(sel){var p=sel.closest(".quiz-option");if(sel.value===ans[qn]){p.classList.add("correct");c++}else{p.classList.add("wrong");qEl.querySelectorAll(".quiz-option").forEach(function(o){if(o.querySelector("input").value===ans[qn])o.classList.add("correct")})}}
+  });
+  scores.quiz=c;var fb=document.getElementById("quizFeedback");
+  fb.className="feedback-box show "+(c>=3?"good":c>=2?"partial":"poor");
+  fb.textContent=t.quiz_pre+c+t.quiz_suf;
+});
+
+/* Open question (screen 16) */
+document.getElementById("checkOpen").addEventListener("click",function(){
+  var t=TR[lang]||TR.pl,a=document.getElementById("openAnswer").value.toLowerCase(),fb=document.getElementById("openFeedback");
+  var kw=[["wytrzymal","strength","mitsn","miczn"],["lekk","light","mass","mas","wag","lehk","legk"],["korozj","corros","irzhav","rdze"],["zmeczen","fatigu","vtom","cykl"],["boeing","787","airbus","a350","dreamliner"],["ciepln","thermal","tepl"],["izolac","insulat","izol"]];
+  var mc=0;kw.forEach(function(g){for(var i=0;i<g.length;i++){if(a.indexOf(g[i])!==-1){mc++;break}}});
+  var len=a.trim().length;
+  if(mc>=4&&len>80){scores.open=5;fb.className="feedback-box show good";fb.textContent=t.open_good}
+  else if(mc>=2&&len>40){scores.open=3;fb.className="feedback-box show partial";fb.textContent=t.open_mid}
+  else{scores.open=1;fb.className="feedback-box show poor";fb.textContent=t.open_low}
+});
+
+/* Results (screen 17) */
+function calcResults(){
+  var tot=scores.quiz+scores.open+scores.dnd,mx=15;
+  document.getElementById("resultScore").textContent=tot;
+  document.getElementById("resultQuiz").textContent=scores.quiz+"/4";
+  document.getElementById("resultOpen").textContent=scores.open+"/5";
+  document.getElementById("resultDnd").textContent=scores.dnd+"/6";
+  document.getElementById("resultTotal").textContent=tot+"/"+mx;
+  var c=document.getElementById("resultCircle");c.className="result-circle";
+  if(tot>=12)c.classList.add("excellent");else if(tot>=7)c.classList.add("good");else c.classList.add("needs-work");
+  SCORM.set("cmi.score.raw",String(tot));SCORM.set("cmi.score.max",String(mx));SCORM.set("cmi.score.min","0");
+  SCORM.set("cmi.score.scaled",String((tot/mx).toFixed(2)));SCORM.commit();
+}
+
+show(cur);applyLang();
+window.addEventListener("beforeunload",function(){SCORM.set("cmi.exit","suspend");SCORM.commit();SCORM.terminate()});
+})();
+</script>
+</body>
+</html>
